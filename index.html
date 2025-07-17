@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Immanuel Portfolio | Yan Stephen Christian Immanuel Hutagalung</title>
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+        }
+        
+        /* Scroll progress bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: rgba(148, 163, 184, 0.1);
+            z-index: 1000;
+        }
+        
+        .scroll-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #0ea5e9, #3b82f6, #8b5cf6);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        /* Additional styles for layout */
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Style for active filter buttons */
+        .filter-btn.active {
+            background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(14, 165, 233, 0.3);
+        }
+        
+        .filter-btn {
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        .filter-btn:hover:not(.active) {
+            background: rgba(14, 165, 233, 0.1);
+            border-color: rgba(14, 165, 233, 0.3);
+            transform: translateY(-1px);
+        }
+        
+        /* Project card hover effects */
+        .project-card {
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(14, 165, 233, 0.1), transparent);
+            transition: left 0.6s;
+        }
+        
+        .project-card:hover::before {
+            left: 100%;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .project-card img {
+            transition: transform 0.4s ease;
+        }
+        
+        .project-card:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* Hero section improvements */
+        .hero-gradient {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Floating elements animation */
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        /* Timeline improvements */
+        .timeline-item {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.6s ease;
+        }
+        
+        .timeline-item.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .timeline-item:nth-child(even) {
+            transform: translateX(30px);
+        }
+        
+        /* Glow effect for buttons */
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-glow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-glow:hover::before {
+            left: 100%;
+        }
+        
+        /* Improved navigation */
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #06b6d4);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Scroll reveal animation */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+        
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal.active {
+            display: flex;
+            opacity: 1;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border-radius: 20px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.7);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+        
+        .modal-header {
+            position: sticky;
+            top: 0;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+            padding: 24px;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-body {
+            padding: 24px;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            background-color: rgba(248, 113, 113, 0.1);
+            color: #f87171;
+        }
+        
+        .project-card {
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .timeline-item {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.6s ease;
+            cursor: pointer;
+        }
+        
+        .timeline-item:hover {
+            transform: translateX(5px) scale(1.02);
+        }
+        
+        /* Custom scrollbar for modal */
+        .modal-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .modal-content::-webkit-scrollbar-track {
+            background: rgba(148, 163, 184, 0.1);
+            border-radius: 10px;
+        }
+        
+        .modal-content::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+            border-radius: 10px;
+        }
+        
+        .feature-list {
+            display: grid;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(14, 165, 233, 0.05);
+            border-radius: 8px;
+            border-left: 4px solid #0ea5e9;
+        }
+        
+        .achievement-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(168, 85, 247, 0.05);
+            border-radius: 8px;
+            border-left: 4px solid #a855f7;
+        }
+    </style>
+</head>
+<body class="text-slate-300">
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo navbar-brand-gradient neon-glow">
+                Immanuel Portfolio
+            </div>
+            <div class="loading-spinner"></div>
+        </div>
+    </div>
+
+    <!-- Progress Indicator -->
+    <div id="progress-indicator" class="progress-indicator" style="width: 0%;"></div>
+
+    <!-- =========== HEADER / NAVIGATION =========== -->
+    <header class="bg-slate-900/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-800/50 animated-bg">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-white floating neon-glow">
+                <span class="navbar-brand-gradient animated-text-3d">Immanuel Portfolio's</span>
+            </a>
+            <ul class="flex items-center space-x-8 stagger-animation">
+                <li><a href="#education" class="nav-link hover:text-sky-400 transition-colors duration-300 magnetic">Education</a></li>
+                <li><a href="#skills" class="nav-link hover:text-sky-400 transition-colors duration-300 magnetic">Skills</a></li>
+                <li><a href="#projects" class="nav-link hover:text-sky-400 transition-colors duration-300 magnetic">Projects</a></li>
+                <li><a href="#organizations" class="nav-link hover:text-sky-400 transition-colors duration-300 magnetic">Organizations</a></li>
+                <li><a href="#contact" class="nav-link hover:text-sky-400 transition-colors duration-300 magnetic">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6">
+
+        <!-- =========== HERO SECTION =========== -->
+        <section id="home" class="text-center py-32 sm:py-40 relative overflow-hidden -mx-6">
+            <!-- Background decorative elements -->
+            <div class="absolute inset-0 overflow-hidden">
+                <div class="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-600/20 blur-3xl"></div>
+                <div class="absolute -bottom-20 -left-20 w-96 h-96 rounded-full bg-gradient-to-tr from-cyan-500/20 to-blue-600/20 blur-3xl"></div>
+                <div class="absolute top-1/2 -translate-y-1/2 -right-32 w-80 h-80 rounded-full bg-gradient-to-br from-purple-500/15 to-pink-500/15 blur-3xl"></div>
+                <div class="absolute top-1/2 -translate-y-1/2 -left-32 w-80 h-80 rounded-full bg-gradient-to-br from-sky-500/15 to-cyan-500/15 blur-3xl"></div>
+            </div>
+            
+            <div class="relative z-10 max-w-6xl mx-auto px-6">
+                <!-- Profile Section with Photo and Text -->
+                <div class="flex flex-col lg:flex-row items-center justify-center gap-12 mb-8">
+                    <!-- Profile Photo -->
+                    <div class="flex-shrink-0 animate-fade-in">
+                        <div class="relative">
+                            <!-- Main photo container -->
+                            <div class="w-80 h-80 sm:w-96 sm:h-96 rounded-full overflow-hidden border-4 border-gradient-to-r from-sky-500 to-purple-600 p-1 bg-gradient-to-r from-sky-500 to-purple-600 shadow-2xl">
+                                <div class="w-full h-full rounded-full overflow-hidden bg-slate-800">
+                                    <!-- Replace this src with your actual photo -->
+                                    <img src="assets/images/profile-photo.jpg" alt="Yan Stephen Christian Immanuel Hutagalung" class="w-full h-full object-cover object-center hover:scale-110 transition-transform duration-500" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <!-- Fallback if photo not found -->
+                                    <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-700 to-slate-800" style="display: none;">
+                                        <div class="text-center">
+                                            <div class="w-32 h-32 mx-auto mb-4 bg-gradient-to-br from-sky-500 to-purple-600 rounded-full flex items-center justify-center">
+                                                <span class="text-4xl font-bold text-white">YS</span>
+                                            </div>
+                                            <p class="text-slate-300 text-sm">photo profile</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Floating decorative elements around photo -->
+                            <div class="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-br from-sky-400 to-blue-500 rounded-full animate-pulse"></div>
+                            <div class="absolute -bottom-6 -left-4 w-6 h-6 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full animate-pulse" style="animation-delay: 0.5s"></div>
+                            <div class="absolute top-8 -left-6 w-4 h-4 bg-gradient-to-br from-cyan-400 to-teal-500 rounded-full animate-pulse" style="animation-delay: 1s"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex-1 text-center lg:text-left">
+                        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight animate-fade-in-up">
+                            <span class="block text-white mb-4 animate-fade-in-left">Hello, I'm</span>
+                            <span class="block typing-effect-name hero-gradient-name" id="typing-name">Immanuel Hutagalung</span>
+                        </h1>
+                        <p class="enhanced-description mt-8 text-lg sm:text-xl lg:text-2xl text-slate-300 max-w-3xl lg:max-w-none leading-relaxed animate-fade-in" style="animation-delay: 0.3s;">
+                            <span class="text-sky-400 font-semibold">Computer Science</span> student at Pertamina University 
+                            with passion in 
+                            <span class="text-purple-400 font-semibold">Web Development</span>, 
+                            <span class="text-cyan-400 font-semibold">Machine Learning</span>, 
+                            <span class="text-pink-400 font-semibold">Mobile App Development</span>, and 
+                            <span class="text-emerald-400 font-semibold">IoT Development</span>.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in" style="animation-delay: 0.6s;">
+                    <a href="#projects" class="btn-glow inline-block bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold px-8 py-4 rounded-xl hover:from-sky-600 hover:to-blue-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl">
+                        View My Projects
+                    </a>
+                    <a href="https://drive.google.com/file/d/1akxeyoWFV0R1ij_da4Baz77S2VhMbP7d/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="inline-block bg-gradient-to-r from-purple-500 to-pink-600 text-white font-semibold px-8 py-4 rounded-xl hover:from-purple-600 hover:to-pink-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14,2 14,8 20,8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10,9 9,9 8,9"></polyline>
+                        </svg>
+                        My CV
+                    </a>
+                    <a href="#contact" class="inline-block border-2 border-sky-500 text-sky-400 font-semibold px-8 py-4 rounded-xl hover:bg-sky-500 hover:text-white transition-all duration-300 transform hover:-translate-y-1">
+                        Contact Me
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========== EDUCATION SECTION =========== -->
+        <section id="education" class="py-24 scroll-reveal">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl sm:text-5xl font-bold mb-6">
+                    <span class="outlined-text" data-text="Educational">Educational</span> <span class="hero-gradient">Background</span>
+                </h2>
+                <p class="text-xl text-slate-400 max-w-2xl mx-auto">
+                    Academic journey that shapes my knowledge foundation and skills
+                </p>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Higher Education -->
+                    <div class="bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl border border-slate-700/50 relative overflow-hidden hover:shadow-2xl transition-all duration-300">
+                        <div class="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-sky-500/20 blur-xl"></div>
+                        <div class="relative">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-gradient-to-br from-sky-500 to-blue-600 rounded-xl flex items-center justify-center mr-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white">
+                                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                                        <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-white">University</h3>
+                                    <p class="text-sky-400 font-semibold">Sep 2022 - Present</p>
+                                </div>
+                            </div>
+                            <h4 class="text-lg font-semibold text-white mb-2">Bachelor of Computer Science</h4>
+                            <p class="text-slate-400 mb-4">Pertamina University</p>
+                            <div class="space-y-2 mb-4">
+                                <div class="flex justify-between">
+                                    <span class="text-slate-400">GPA</span>
+                                    <a href="https://drive.google.com/file/d/1mPW8fNIKayLqhjR7myWm0gdoH-VYPUUL/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="text-sky-400 font-semibold hover:text-sky-300 transition-colors duration-200 cursor-pointer underline decoration-dotted underline-offset-2 hover:decoration-solid" title="Click to view transcript">3.32</a>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-400">Status</span>
+                                    <span class="text-green-400 font-semibold">Active Student</span>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <p class="text-sm text-slate-300"><strong>Favorite Subjects:</strong></p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-cyan-500/20 text-cyan-300 text-xs font-semibold px-2 py-1 rounded-full">Mobile Apps Developer</span>
+                                    <span class="bg-green-500/20 text-green-300 text-xs font-semibold px-2 py-1 rounded-full">Web Development</span>
+                                    <span class="bg-purple-500/20 text-purple-300 text-xs font-semibold px-2 py-1 rounded-full">Database Systems</span>
+                                    <span class="bg-orange-500/20 text-orange-300 text-xs font-semibold px-2 py-1 rounded-full">Software Engineering</span>
+                                    <span class="bg-indigo-500/20 text-indigo-300 text-xs font-semibold px-2 py-1 rounded-full">Internet of Things</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- High School Education -->
+                    <div class="bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl border border-slate-700/50 relative overflow-hidden hover:shadow-2xl transition-all duration-300">
+                        <div class="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-purple-500/20 blur-xl"></div>
+                        <div class="relative">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mr-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white">
+                                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-white">Senior High School</h3>
+                                    <p class="text-purple-400 font-semibold">2019 - 2021</p>
+                                </div>
+                            </div>
+                            <h4 class="text-lg font-semibold text-white mb-2">Science</h4>
+                            <p class="text-slate-400 mb-4">SMA Negeri 49 Jakarta</p>
+                            <div class="space-y-2 mb-4">
+                                <div class="flex justify-between">
+                                    <span class="text-slate-400">Rata-rata</span>
+                                    <span class="text-purple-400 font-semibold">87.5</span>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <p class="text-sm text-slate-300"><strong>Activities:</strong></p>
+                                <div class="space-y-1">
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-yellow-400 text-sm">📚</span>
+                                        <span class="text-slate-300 text-sm">Active in extracurricular activities like House Of Music and Christian Fellowship</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-yellow-400 text-sm">🔬</span>
+                                        <span class="text-slate-300 text-sm">Focused on Mathematics, Physics, and Chemistry subjects</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========== SKILLS SECTION =========== -->
+        <section id="skills" class="py-24 scroll-reveal">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl sm:text-5xl font-bold mb-6">
+                    <span class="outlined-text" data-text="Technical">Technical</span> <span class="hero-gradient">Skills</span>
+                </h2>
+                <p class="text-xl text-slate-400 max-w-2xl mx-auto">
+                    Programming languages, frameworks, and technologies that power my development journey
+                </p>
+            </div>
+
+            <div class="max-w-6xl mx-auto">
+                <!-- Frontend Skills -->
+                <div class="mb-12">
+                    <h3 class="text-2xl font-bold text-sky-400 mb-8 text-center">Frontend Development</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        <div class="skill-card bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700/50 cursor-pointer hover:shadow-2xl transition-all duration-300 hover:-translate-y-2" onclick="filterProjectsBySkill('web')">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-16 h-16 bg-gradient-to-br from-sky-500 to-blue-600 rounded-xl flex items-center justify-center mb-4">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-white">
+                                        <path d="M12 2L3 7V17L12 22L21 17V7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M12 22V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M12 12L3 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M12 12L21 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <h4 class="text-lg font-bold text-white mb-2">React.js</h4>
+                                <p class="text-slate-400 text-sm mb-3">JavaScript library for building UI</p>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-sky-500 to-blue-600 h-2 rounded-full" style="width: 90%"></div>
+                                </div>
+                                <span class="text-sky-400 text-xs mt-2 font-semibold">Click to view projects</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-card bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700/50 cursor-pointer hover:shadow-2xl transition-all duration-300 hover:-translate-y-2" onclick="filterProjectsBySkill('web')">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-16 h-16 bg-gradient-to-br from-gray-700 to-gray-800 rounded-xl flex items-center justify-center mb-4">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-white">
+                                        <path d="M12 2L22 8.5V15.5L12 22L2 15.5V8.5L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M12 22V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M22 8.5L12 2L2 8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <h4 class="text-lg font-bold text-white mb-2">Next.js</h4>
+                                <p class="text-slate-400 text-sm mb-3">React framework for production</p>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-gray-500 to-gray-600 h-2 rounded-full" style="width: 85%"></div>
+                                </div>
+                                <span class="text-gray-400 text-xs mt-2 font-semibold">Click to view projects</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-card bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700/50 cursor-pointer hover:shadow-2xl transition-all duration-300 hover:-translate-y-2" onclick="filterProjectsBySkill('web')">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-4">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-white">
+                                        <path d="M2 2H22V22H2V2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M6 6H18V18H6V6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <h4 class="text-lg font-bold text-white mb-2">Tailwind CSS</h4>
+                                <p class="text-slate-400 text-sm mb-3">Utility-first CSS framework</p>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full" style="width: 95%"></div>
+                                </div>
+                                <span class="text-blue-400 text-xs mt-2 font-semibold">Click to view projects</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-card bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700/50 cursor-pointer hover:shadow-2xl transition-all duration-300 hover:-translate-y-2" onclick="filterProjectsBySkill('web')">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-16 h-16 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-xl flex items-center justify-center mb-4">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-white">
+                                        <path d="M3 3H21V21H3V3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M9 9L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M15 9L9 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <h4 class="text-lg font-bold text-white mb-2">JavaScript</h4>
+                                <p class="text-slate-400 text-sm mb-3">Programming language for web</p>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-yellow-500 to-orange-500 h-2 rounded-full" style="width: 92%"></div>
+                                </div>
+                                <span class="text-yellow-400 text-xs mt-2 font-semibold">Click to view projects</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Backend Skills -->
+                <div class="mb-12">
+                    <h3 class="text-2xl font-bold text-green-400 mb-8 text-center">Backend Development</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                        <div class="skill-card bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700/50 cursor-pointer hover:shadow-2xl transition-all duration-300 hover:-translate-y-2" onclick="filterProjectsBySkill('web')">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mb-4">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-white">
+                                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <h4 class="text-lg font-bold text-white mb-2">Node.js</h4>
+                                <p class="text-slate-400 text-sm mb-3">JavaScript runtime environment</p>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-green-500 to-green-600 h-2 rounded-full" style="width: 88%"></div>
+                                </div>
+                                <span class="text-green-400 text-xs mt-2 font-semibold">Click to view projects</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-card bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700/50 cursor-pointer hover:shadow-2xl transition-all duration-300 hover:-translate-y-2" onclick="filterProjectsBySkill('ml')">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-16 h-16 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-xl flex items-center justify-center mb-4">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-white">
+                                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <h4 class="text-lg font-bold text-white mb-2">Python</h4>
+                                <p class="text-slate-400 text-sm mb-3">Programming language</p>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 h-2 rounded-full" style="width: 93%"></div>
+                                </div>
+                                <span class="text-yellow-400 text-xs mt-2 font-semibold">Click to view projects</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-card bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700/50 cursor-pointer hover:shadow-2xl transition-all duration-300 hover:-translate-y-2" onclick="filterProjectsBySkill('web')">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-16 h-16 bg-white rounded-xl flex items-center justify-center mb-4 p-2">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg" alt="PHP" class="w-full h-full object-contain">
+                                </div>
+                                <h4 class="text-lg font-bold text-white mb-2">PHP</h4>
+                                <p class="text-slate-400 text-sm mb-3">Server-side scripting</p>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-purple-500 to-purple-600 h-2 rounded-full" style="width: 90%"></div>
+                                </div>
+                                <span class="text-purple-400 text-xs mt-2 font-semibold">Click to view projects</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-card bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700/50 cursor-pointer hover:shadow-2xl transition-all duration-300 hover:-translate-y-2" onclick="filterProjectsBySkill('ml')">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-16 h-16 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center mb-4">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-white">
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M8 14S9.5 16 12 16S16 14 16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <line x1="9" y1="9" x2="9.01" y2="9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <line x1="15" y1="9" x2="15.01" y2="9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <h4 class="text-lg font-bold text-white mb-2">Flask</h4>
+                                <p class="text-slate-400 text-sm mb-3">Python web framework</p>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 h-2 rounded-full" style="width: 85%"></div>
+                                </div>
+                                <span class="text-indigo-400 text-xs mt-2 font-semibold">Click to view projects</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-card bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700/50 cursor-pointer hover:shadow-2xl transition-all duration-300 hover:-translate-y-2" onclick="filterProjectsBySkill('web')">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-16 h-16 bg-gradient-to-br from-gray-600 to-gray-700 rounded-xl flex items-center justify-center mb-4">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-white">
+                                        <path d="M4 4H20V20H4V4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M9 9H15V15H9V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <h4 class="text-lg font-bold text-white mb-2">Express.js</h4>
+                                <p class="text-slate-400 text-sm mb-3">Node.js web framework</p>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-gray-500 to-gray-600 h-2 rounded-full" style="width: 87%"></div>
+                                </div>
+                                <span class="text-gray-400 text-xs mt-2 font-semibold">Click to view projects</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-card bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700/50 cursor-pointer hover:shadow-2xl transition-all duration-300 hover:-translate-y-2" onclick="filterProjectsBySkill('firebase')">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-16 h-16 bg-white rounded-xl flex items-center justify-center mb-4 p-2">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-original.svg" alt="Firebase" class="w-full h-full object-contain">
+                                </div>
+                                <h4 class="text-lg font-bold text-white mb-2">Firebase</h4>
+                                <p class="text-slate-400 text-sm mb-3">Backend service</p>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-red-500 to-red-600 h-2 rounded-full" style="width: 83%"></div>
+                                </div>
+                                <span class="text-red-400 text-xs mt-2 font-semibold">Click to view projects</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Machine Learning & Mobile -->
+                <div class="grid md:grid-cols-2 gap-12">
+                    <!-- Machine Learning -->
+                    <div>
+                        <h3 class="text-2xl font-bold text-purple-400 mb-8 text-center">Machine Learning</h3>
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="skill-card bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700/50 cursor-pointer hover:shadow-2xl transition-all duration-300 hover:-translate-y-2" onclick="filterProjectsBySkill('ml')">
+                                <div class="flex flex-col items-center text-center">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mb-4">
+                                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-white">
+                                            <path d="M21 16V8A2 2 0 0 0 19 6H5A2 2 0 0 0 3 8V16A2 2 0 0 0 5 18H19A2 2 0 0 0 21 16Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <polyline points="7,10 12,15 17,10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <h4 class="text-lg font-bold text-white mb-2">TensorFlow</h4>
+                                    <p class="text-slate-400 text-sm mb-3">ML library</p>
+                                    <div class="w-full bg-slate-700 rounded-full h-2">
+                                        <div class="bg-gradient-to-r from-orange-500 to-orange-600 h-2 rounded-full" style="width: 82%"></div>
+                                    </div>
+                                    <span class="text-orange-400 text-xs mt-2 font-semibold">Click to view projects</span>
+                                </div>
+                            </div>
+
+                            <div class="skill-card bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700/50 cursor-pointer hover:shadow-2xl transition-all duration-300 hover:-translate-y-2" onclick="filterProjectsBySkill('ml')">
+                                <div class="flex flex-col items-center text-center">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-4">
+                                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-white">
+                                            <path d="M3 3H21V21H3V3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M9 9H15V15H9V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <h4 class="text-lg font-bold text-white mb-2">Scikit-learn</h4>
+                                    <p class="text-slate-400 text-sm mb-3">ML algorithms</p>
+                                    <div class="w-full bg-slate-700 rounded-full h-2">
+                                        <div class="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full" style="width: 90%"></div>
+                                    </div>
+                                    <span class="text-blue-400 text-xs mt-2 font-semibold">Click to view projects</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Development -->
+                    <div>
+                        <h3 class="text-2xl font-bold text-cyan-400 mb-8 text-center">Mobile Development</h3>
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="skill-card bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700/50 cursor-pointer hover:shadow-2xl transition-all duration-300 hover:-translate-y-2" onclick="filterProjectsBySkill('mobile')">
+                                <div class="flex flex-col items-center text-center">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-4">
+                                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-white">
+                                            <path d="M12 2L13.09 8.26L19 7L14.74 11.26L21 12L14.74 12.74L19 17L13.09 15.74L12 22L10.91 15.74L5 17L9.26 12.74L3 12L9.26 11.26L5 7L10.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <h4 class="text-lg font-bold text-white mb-2">Flutter</h4>
+                                    <p class="text-slate-400 text-sm mb-3">Cross-platform mobile</p>
+                                    <div class="w-full bg-slate-700 rounded-full h-2">
+                                        <div class="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full" style="width: 88%"></div>
+                                    </div>
+                                    <span class="text-blue-400 text-xs mt-2 font-semibold">Click to view projects</span>
+                                </div>
+                            </div>
+
+                            <div class="skill-card bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700/50 cursor-pointer hover:shadow-2xl transition-all duration-300 hover:-translate-y-2" onclick="filterProjectsBySkill('mobile')">
+                                <div class="flex flex-col items-center text-center">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-xl flex items-center justify-center mb-4">
+                                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-white">
+                                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                                            <line x1="12" y1="18" x2="12.01" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <h4 class="text-lg font-bold text-white mb-2">React Native</h4>
+                                    <p class="text-slate-400 text-sm mb-3">Cross-platform</p>
+                                    <div class="w-full bg-slate-700 rounded-full h-2">
+                                        <div class="bg-gradient-to-r from-cyan-500 to-cyan-600 h-2 rounded-full" style="width: 86%"></div>
+                                    </div>
+                                    <span class="text-cyan-400 text-xs mt-2 font-semibold">Click to view projects</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Development Tools -->
+                <div class="mt-12">
+                    <h3 class="text-2xl font-bold text-amber-400 mb-8 text-center">Development Tools</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                        <div class="skill-card bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700/50 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-16 h-16 bg-white rounded-xl flex items-center justify-center mb-4 p-2">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" alt="VS Code" class="w-full h-full object-contain">
+                                </div>
+                                <h4 class="text-lg font-bold text-white mb-2">VS Code</h4>
+                                <p class="text-slate-400 text-sm mb-3">Code editor</p>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full" style="width: 95%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="skill-card bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700/50 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-16 h-16 bg-white rounded-xl flex items-center justify-center mb-4 p-2 relative">
+                                    <div class="w-full h-full bg-gradient-to-br from-blue-500 to-green-500 rounded-lg flex items-center justify-center">
+                                        <div class="text-white font-bold text-lg">T</div>
+                                    </div>
+                                </div>
+                                <h4 class="text-lg font-bold text-white mb-2">Thonny IDE</h4>
+                                <p class="text-slate-400 text-sm mb-3">Python IDE</p>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-purple-500 to-purple-600 h-2 rounded-full" style="width: 85%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="skill-card bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700/50 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-16 h-16 bg-white rounded-xl flex items-center justify-center mb-4 p-2">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" alt="GitHub" class="w-full h-full object-contain">
+                                </div>
+                                <h4 class="text-lg font-bold text-white mb-2">GitHub</h4>
+                                <p class="text-slate-400 text-sm mb-3">Version control</p>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-gray-500 to-gray-600 h-2 rounded-full" style="width: 90%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="skill-card bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700/50 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-16 h-16 bg-white rounded-xl flex items-center justify-center mb-4 p-2">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" alt="MySQL" class="w-full h-full object-contain">
+                                </div>
+                                <h4 class="text-lg font-bold text-white mb-2">MySQL</h4>
+                                <p class="text-slate-400 text-sm mb-3">Database</p>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-blue-600 to-blue-700 h-2 rounded-full" style="width: 88%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="skill-card bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700/50 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-16 h-16 bg-white rounded-xl flex items-center justify-center mb-4 p-2">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" alt="Laravel" class="w-full h-full object-contain">
+                                </div>
+                                <h4 class="text-lg font-bold text-white mb-2">Laravel</h4>
+                                <p class="text-slate-400 text-sm mb-3">PHP framework</p>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-red-500 to-red-600 h-2 rounded-full" style="width: 87%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="skill-card bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700/50 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-16 h-16 bg-white rounded-xl flex items-center justify-center mb-4 p-2">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" alt="HTML5" class="w-full h-full object-contain">
+                                </div>
+                                <h4 class="text-lg font-bold text-white mb-2">HTML</h4>
+                                <p class="text-slate-400 text-sm mb-3">Markup language</p>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-orange-500 to-orange-600 h-2 rounded-full" style="width: 95%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========== PROJECTS SECTION =========== -->
+        <section id="projects" class="py-24 scroll-reveal">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl sm:text-5xl font-bold mb-6">
+                    <span class="outlined-text" data-text="My Best">My Best</span> <span class="hero-gradient">Projects</span>
+                </h2>
+                <p class="text-xl text-slate-400 max-w-2xl mx-auto">
+                    Showcase of innovative solutions built with cutting-edge technologies and modern development practices
+                </p>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="flex justify-center flex-wrap gap-4 mb-16">
+                <button class="filter-btn active px-6 py-3 bg-slate-800 rounded-xl font-medium hover:bg-sky-600 transition-all duration-300" data-filter="all">All</button>
+                <button class="filter-btn px-6 py-3 bg-slate-800 rounded-xl font-medium hover:bg-sky-600 transition-all duration-300" data-filter="web">Web Development</button>
+                <button class="filter-btn px-6 py-3 bg-slate-800 rounded-xl font-medium hover:bg-sky-600 transition-all duration-300" data-filter="ml">Machine Learning</button>
+                <button class="filter-btn px-6 py-3 bg-slate-800 rounded-xl font-medium hover:bg-sky-600 transition-all duration-300" data-filter="mobile">Mobile Apps</button>
+                <button class="filter-btn px-6 py-3 bg-slate-800 rounded-xl font-medium hover:bg-sky-600 transition-all duration-300" data-filter="iot">IoT</button>
+            </div>
+
+            <!-- Project Grid -->
+            <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Project Card 1: Food For Everyone -->
+                <div class="project-card bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl overflow-hidden shadow-xl border border-slate-700/50" data-category="web" onclick="openProjectDetail('foodforeveryone')">
+                    <div class="relative overflow-hidden">
+                        <img src="assets/images/cover.png" alt="Food For Everyone Project Image" class="w-full h-52 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute top-4 right-4 bg-sky-500/20 backdrop-blur-sm px-3 py-1 rounded-full">
+                            <span class="text-sky-300 text-sm font-semibold">Click for details</span>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold text-white mb-3">Food For Everyone</h3>
+                        <p class="text-slate-400 mb-6 leading-relaxed">Web application designed to help restaurants distribute leftover products after operating hours to reduce food waste.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-red-500/20 text-red-300 text-sm font-semibold px-3 py-1.5 rounded-full border border-red-500/30">Laravel</span>
+                            <span class="bg-indigo-500/20 text-indigo-300 text-sm font-semibold px-3 py-1.5 rounded-full border border-indigo-500/30">PHP</span>
+                            <span class="bg-blue-500/20 text-blue-300 text-sm font-semibold px-3 py-1.5 rounded-full border border-blue-500/30">MySQL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 2: IoT Smart Parking -->
+                <div class="project-card bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl overflow-hidden shadow-xl border border-slate-700/50" data-category="iot firebase" onclick="openProjectDetail('iotparking')">
+                    <div class="relative overflow-hidden">
+                        <img src="assets/images/smart-parking.jpg" alt="IoT Smart Parking Project Image" class="w-full h-52 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute top-4 right-4 bg-sky-500/20 backdrop-blur-sm px-3 py-1 rounded-full">
+                            <span class="text-sky-300 text-sm font-semibold">Click for details</span>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold text-white mb-3">IoT Smart Parking Detector</h3>
+                        <p class="text-slate-400 mb-6 leading-relaxed">IoT-based smart parking system providing real-time monitoring of parking space availability with automated access control.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-yellow-500/20 text-yellow-300 text-sm font-semibold px-3 py-1.5 rounded-full border border-yellow-500/30">Python</span>
+                            <span class="bg-orange-500/20 text-orange-300 text-sm font-semibold px-3 py-1.5 rounded-full border border-orange-500/30">Firebase</span>
+                            <span class="bg-purple-500/20 text-purple-300 text-sm font-semibold px-3 py-1.5 rounded-full border border-purple-500/30">Internet of Things</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 3: PeduliYuk Mobile App -->
+                <div class="project-card bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl overflow-hidden shadow-xl border border-slate-700/50" data-category="mobile" onclick="openProjectDetail('peduliyuk')">
+                    <div class="relative overflow-hidden">
+                        <img src="assets/images/cover_py.jpg" alt="PeduliYuk Mobile App Project Image" class="w-full h-52 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute top-4 right-4 bg-sky-500/20 backdrop-blur-sm px-3 py-1 rounded-full">
+                            <span class="text-sky-300 text-sm font-semibold">Click for details</span>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold text-white mb-3">PeduliYuk Mobile App</h3>
+                        <p class="text-slate-400 mb-6 leading-relaxed">Flutter-based mobile application developed to mitigate fast fashion impact by connecting donors with non-profit organizations.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-sky-500/20 text-sky-300 text-sm font-semibold px-3 py-1.5 rounded-full border border-sky-500/30">Flutter</span>
+                            <span class="bg-green-500/20 text-green-300 text-sm font-semibold px-3 py-1.5 rounded-full border border-green-500/30">Dart</span>
+                            <span class="bg-red-500/20 text-red-300 text-sm font-semibold px-3 py-1.5 rounded-full border border-red-500/30">MySQL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 4: Waste Classification ML -->
+                <div class="project-card bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl overflow-hidden shadow-xl border border-slate-700/50" data-category="ml" onclick="openProjectDetail('wasteml')">
+                    <div class="relative overflow-hidden">
+                        <img src="assets/images/ml4.jpg" alt="Waste Classification ML Project Image" class="w-full h-52 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute top-4 right-4 bg-sky-500/20 backdrop-blur-sm px-3 py-1 rounded-full">
+                            <span class="text-sky-300 text-sm font-semibold">Click for details</span>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold text-white mb-3">Waste Classification</h3>
+                        <p class="text-slate-400 mb-6 leading-relaxed">Deep learning system for automatic waste classification into six categories using CNN architectures and transfer learning.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-yellow-500/20 text-yellow-300 text-sm font-semibold px-3 py-1.5 rounded-full border border-yellow-500/30">Python</span>
+                            <span class="bg-orange-500/20 text-orange-300 text-sm font-semibold px-3 py-1.5 rounded-full border border-orange-500/30">TensorFlow</span>
+                            <span class="bg-indigo-500/20 text-indigo-300 text-sm font-semibold px-3 py-1.5 rounded-full border border-indigo-500/30">OpenCV</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- =========== ORGANIZATIONAL EXPERIENCE SECTION =========== -->
+        <section id="organizations" class="py-24 scroll-reveal">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl sm:text-5xl font-bold mb-6">
+                    <span class="outlined-text" data-text="Organizational">Organizational</span> <span class="hero-gradient">Experience</span>
+                </h2>
+                <p class="text-xl text-slate-400 max-w-2xl mx-auto">
+                    Leadership roles and organizational contributions that shaped my professional development and teamwork skills
+                </p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto relative">
+                <!-- Vertical timeline bar -->
+                <div class="absolute left-3 sm:left-1/2 -translate-x-1/2 h-full w-1 bg-gradient-to-b from-sky-500 to-purple-600 rounded-full" aria-hidden="true"></div>
+                
+                <!-- Timeline Item 1: Head of External Relations -->
+                <div class="timeline-item relative mb-12 flex items-center w-full" onclick="openOrgModal('external')">
+                    <div class="hidden sm:block w-1/2 pr-12"></div>
+                    <div class="hidden sm:block absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-gradient-to-r from-sky-500 to-blue-600 ring-8 ring-slate-900 shadow-lg"></div>
+                    <div class="w-full sm:w-1/2 sm:pl-12">
+                        <div class="bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700/50 relative overflow-hidden hover:shadow-2xl transition-all duration-300">
+                            <div class="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-sky-500/20 blur-xl"></div>
+                            <div class="relative">
+                                <p class="text-sm text-sky-400 font-semibold mb-2">Dec 2024 - Present</p>
+                                <h3 class="text-2xl font-bold text-white mb-2">Head of External Relations Department</h3>
+                                <p class="text-sky-300 font-medium mb-4">Computer Science Student Association</p>
+                                <p class="text-slate-400 leading-relaxed">Supervising division heads and seeking organizational development opportunities through strategic partnerships.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 2: Academic Training CE 8.0 -->
+                <div class="timeline-item relative mb-12 flex items-center w-full" onclick="openOrgModal('atcs8')">
+                    <div class="hidden sm:block w-1/2 pl-12 sm:order-last"></div>
+                    <div class="hidden sm:block absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 ring-8 ring-slate-900 shadow-lg"></div>
+                    <div class="w-full sm:w-1/2 sm:pr-12 sm:text-right">
+                         <div class="bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700/50 text-left sm:text-right relative overflow-hidden hover:shadow-2xl transition-all duration-300">
+                            <div class="absolute -top-4 -left-4 w-16 h-16 rounded-full bg-purple-500/20 blur-xl"></div>
+
+                            <div class="relative">
+                                <p class="text-sm text-purple-400 font-semibold mb-2">Nov 2024 - May 2025</p>
+                                <h3 class="text-2xl font-bold text-white mb-2">Chief Executive</h3>
+                                <p class="text-purple-300 font-medium mb-4">Academic Training Computer Science 8.0</p>
+                                <p class="text-slate-400 leading-relaxed">Leading the complete project management and strategic direction of the academic training event.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 3: Head of Logistics Cite Up 2023 -->
+                <div class="timeline-item relative mb-12 flex items-center w-full" onclick="openOrgModal('citeup')">
+                    <div class="hidden sm:block w-1/2 pr-12"></div>
+                    <div class="hidden sm:block absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 ring-8 ring-slate-900 shadow-lg"></div>
+                    <div class="w-full sm:w-1/2 sm:pl-12">
+                        <div class="bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700/50 relative overflow-hidden hover:shadow-2xl transition-all duration-300">
+                            <div class="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-green-500/20 blur-xl"></div>
+
+                            <div class="relative">
+                                <p class="text-sm text-green-400 font-semibold mb-2">Mar 2024 - Sep 2024</p>
+                                <h3 class="text-2xl font-bold text-white mb-2">Head of Logistics Department</h3>
+                                <p class="text-green-300 font-medium mb-4">Cite Up 2023</p>
+                                <p class="text-slate-400 leading-relaxed">Managing logistics operations and ensuring timely project execution for the event.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 4: Head of Partnership -->
+                <div class="timeline-item relative mb-12 flex items-center w-full" onclick="openOrgModal('partnership')">
+                    <div class="hidden sm:block w-1/2 pl-12 sm:order-last"></div>
+                    <div class="hidden sm:block absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 ring-8 ring-slate-900 shadow-lg"></div>
+                    <div class="w-full sm:w-1/2 sm:pr-12 sm:text-right">
+                         <div class="bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700/50 text-left sm:text-right relative overflow-hidden hover:shadow-2xl transition-all duration-300">
+                            <div class="absolute -top-4 -left-4 w-16 h-16 rounded-full bg-cyan-500/20 blur-xl"></div>
+
+                            <div class="relative">
+                                <p class="text-sm text-cyan-400 font-semibold mb-2">Feb 2024 - Nov 2024</p>
+                                <h3 class="text-2xl font-bold text-white mb-2">Head of Partnership and Cooperation Division</h3>
+                                <p class="text-cyan-300 font-medium mb-4">Computer Science Student Association</p>
+                                <p class="text-slate-400 leading-relaxed">Establishing strategic partnerships and collaboration opportunities for organizational development.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 5: Public Relations Team Member -->
+                <div class="timeline-item relative mb-12 flex items-center w-full" onclick="openOrgModal('atcs7')">
+                    <div class="hidden sm:block w-1/2 pr-12"></div>
+                    <div class="hidden sm:block absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-gradient-to-r from-orange-500 to-red-500 ring-8 ring-slate-900 shadow-lg"></div>
+                    <div class="w-full sm:w-1/2 sm:pl-12">
+                        <div class="bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700/50 relative overflow-hidden hover:shadow-2xl transition-all duration-300">
+                            <div class="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-orange-500/20 blur-xl"></div>
+
+                            <div class="relative">
+                                <p class="text-sm text-orange-400 font-semibold mb-2">Nov 2023 - May 2024</p>
+                                <h3 class="text-2xl font-bold text-white mb-2">Public Relations Team Member</h3>
+                                <p class="text-orange-300 font-medium mb-4">Academic Training Computer Science 7.0</p>
+                                <p class="text-slate-400 leading-relaxed">Coordinating communications and managing relationships with speakers and participants.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- =========== CONTACT SECTION =========== -->
+        <section id="contact" class="py-24 text-center scroll-reveal">
+            <div class="max-w-4xl mx-auto">
+                <div class="mb-16">
+                    <h2 class="text-4xl sm:text-5xl font-bold mb-6">
+                        <span class="outlined-text" data-text="Let's">Let's</span> <span class="hero-gradient">Collaborate</span>
+                    </h2>
+                    <p class="text-xl text-slate-400 max-w-2xl mx-auto">
+                        Ready to discuss new opportunities, innovative projects, or share insights about technology and development
+                    </p>
+                </div>
+                
+                <div class="bg-gradient-to-br from-slate-800 to-slate-900 p-12 rounded-3xl border border-slate-700/50 relative overflow-hidden">
+                    <div class="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-gradient-to-br from-sky-500/20 to-purple-600/20 blur-2xl"></div>
+                    <div class="absolute -bottom-8 -left-8 w-32 h-32 rounded-full bg-gradient-to-tr from-cyan-500/20 to-blue-600/20 blur-2xl"></div>
+                    
+                    <div class="relative">
+                        <div class="social-contact flex justify-center items-center space-x-8 mb-8">
+                            <!-- Email -->
+                            <a href="mailto:yan.stephen49@gmail.com" class="group flex flex-col items-center p-4 bg-slate-800/50 rounded-2xl hover:bg-slate-700/50 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-xl magnetic card-hover ripple">
+                                <div class="w-14 h-14 bg-gradient-to-br from-sky-500 to-blue-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                </div>
+                                <span class="text-white font-semibold text-sm">Email</span>
+                            </a>
+                            
+                            <!-- WhatsApp -->
+                            <a href="https://wa.me/6281291468340" class="group flex flex-col items-center p-4 bg-slate-800/50 rounded-2xl hover:bg-slate-700/50 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-xl magnetic card-hover ripple">
+                                <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                </div>
+                                <span class="text-white font-semibold text-sm">WhatsApp</span>
+                            </a>
+                            
+                            <!-- LinkedIn -->
+                            <a href="https://www.linkedin.com/in/yan-stephen-christian-immanuel-b03217248/" class="group flex flex-col items-center p-4 bg-slate-800/50 rounded-2xl hover:bg-slate-700/50 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-xl magnetic card-hover ripple">
+                                <div class="w-14 h-14 bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                                </div>
+                                <span class="text-white font-semibold text-sm">LinkedIn</span>
+                            </a>
+                            
+                            <!-- GitHub -->
+                            <a href="https://github.com/YanStephen29" class="group flex flex-col items-center p-4 bg-slate-800/50 rounded-2xl hover:bg-slate-700/50 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-xl magnetic card-hover ripple">
+                                <div class="w-14 h-14 bg-gradient-to-br from-gray-700 to-gray-800 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                                </div>
+                                <span class="text-white font-semibold text-sm">GitHub</span>
+                            </a>
+                        </div>
+                        
+                        <div class="text-center">
+                            <p class="text-slate-400 mb-6">Or send a direct message via email for further discussion</p>
+                            <a href="mailto:yan.stephen49@gmail.com" class="btn-glow inline-block bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold px-8 py-4 rounded-xl hover:from-sky-600 hover:to-blue-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl">
+                                Send Email Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- =========== FOOTER =========== -->
+    <footer class="bg-slate-900/90 border-t border-slate-800/50 backdrop-blur-md">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-slate-400">&copy; 2025 Yan Stephen Christian Immanuel Hutagalung.</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#home" class="text-slate-400 hover:text-sky-400 transition-colors duration-300">Home</a>
+                    <a href="#education" class="text-slate-400 hover:text-sky-400 transition-colors duration-300">Education</a>
+                    <a href="#skills" class="text-slate-400 hover:text-sky-400 transition-colors duration-300">Skills</a>
+                    <a href="#projects" class="text-slate-400 hover:text-sky-400 transition-colors duration-300">Projects</a>
+                    <a href="#organizations" class="text-slate-400 hover:text-sky-400 transition-colors duration-300">Organizations</a>
+                    <a href="#contact" class="text-slate-400 hover:text-sky-400 transition-colors duration-300">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- =========== MODALS =========== -->
+    <!-- Project Modal -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="projectModalTitle" class="text-2xl font-bold text-white"></h2>
+                <button class="close-btn" onclick="closeModal('projectModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="projectModalContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Organization Modal -->
+    <div id="orgModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="orgModalTitle" class="text-2xl font-bold text-white"></h2>
+                <button class="close-btn" onclick="closeModal('orgModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="orgModalContent"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- =========== JAVASCRIPT FILES =========== -->
+    <!-- Data Files -->
+    <script src="js/data.js"></script>
+    
+    <!-- Functionality Files -->
+    <script src="js/modal.js"></script>
+    <script src="js/filter.js"></script>
+    
+    <!-- Main Application -->
+    <script src="js/main.js"></script>
+
+</body>
+</html>
