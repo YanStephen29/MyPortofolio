@@ -1,0 +1,343 @@
+/* =========== PROFESSIONAL PROFILE PHOTO ENHANCEMENTS =========== */
+
+/* Professional Photo Container */
+.professional-photo-container {
+    position: relative;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+
+/* Enhanced Professional Border */
+.professional-border {
+    background: linear-gradient(45deg, #0ea5e9, #3b82f6, #8b5cf6, #ec4899);
+    background-size: 300% 300%;
+    animation: professional-gradient 4s ease-in-out infinite;
+    position: relative;
+}
+
+.professional-border::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+    border-radius: inherit;
+    animation: professional-shimmer 3s linear infinite;
+    z-index: -1;
+}
+
+@keyframes professional-gradient {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+@keyframes professional-shimmer {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Professional Badge System */
+.professional-badge {
+    position: absolute;
+    background: linear-gradient(45deg, #10b981, #059669);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: badge-pulse 2s ease-in-out infinite;
+    z-index: 10;
+}
+
+.badge-available {
+    top: -10px;
+    right: 10px;
+    background: linear-gradient(45deg, #10b981, #059669);
+}
+
+.badge-verified {
+    bottom: -10px;
+    left: 10px;
+    background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+}
+
+.badge-status {
+    top: 50%;
+    right: -20px;
+    transform: translateY(-50%);
+    background: linear-gradient(45deg, #f59e0b, #d97706);
+    writing-mode: vertical-lr;
+    text-orientation: mixed;
+}
+
+@keyframes badge-pulse {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+    }
+    50% { 
+        transform: scale(1.05);
+        box-shadow: 0 12px 35px rgba(16, 185, 129, 0.6);
+    }
+}
+
+/* Professional Info Overlay */
+.professional-overlay {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 12px 20px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.professional-photo-container:hover .professional-overlay {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-10px);
+}
+
+.professional-overlay::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid rgba(15, 23, 42, 0.95);
+}
+
+/* Professional Skills Indicator */
+.skills-indicator {
+    position: absolute;
+    top: 10px;
+    left: -40px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 10;
+}
+
+.skill-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    position: relative;
+    animation: skill-glow 2s ease-in-out infinite;
+}
+
+.skill-dot::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border-radius: 50%;
+    background: inherit;
+    opacity: 0.5;
+    animation: skill-pulse 2s ease-in-out infinite;
+}
+
+.skill-web { background: linear-gradient(45deg, #0ea5e9, #3b82f6); }
+.skill-mobile { background: linear-gradient(45deg, #8b5cf6, #ec4899); }
+.skill-ml { background: linear-gradient(45deg, #f59e0b, #ef4444); }
+.skill-iot { background: linear-gradient(45deg, #10b981, #059669); }
+
+@keyframes skill-glow {
+    0%, 100% { box-shadow: 0 0 5px currentColor; }
+    50% { box-shadow: 0 0 15px currentColor, 0 0 25px currentColor; }
+}
+
+@keyframes skill-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.5); opacity: 0.2; }
+}
+
+/* Professional Experience Level */
+.experience-ring {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    border: 3px solid transparent;
+    border-top: 3px solid #0ea5e9;
+    border-right: 3px solid #8b5cf6;
+    border-radius: 50%;
+    animation: experience-rotate 8s linear infinite;
+    z-index: 1;
+}
+
+.experience-ring::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    border: 2px solid transparent;
+    border-bottom: 2px solid #ec4899;
+    border-left: 2px solid #f59e0b;
+    border-radius: 50%;
+    animation: experience-rotate 6s linear infinite reverse;
+}
+
+@keyframes experience-rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Achievement Stars */
+.achievement-stars {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 4px;
+    z-index: 10;
+}
+
+.achievement-star {
+    width: 16px;
+    height: 16px;
+    background: linear-gradient(45deg, #fbbf24, #f59e0b);
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    animation: star-twinkle 1.5s ease-in-out infinite;
+}
+
+.achievement-star:nth-child(2) { animation-delay: 0.3s; }
+.achievement-star:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes star-twinkle {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.2); }
+}
+
+/* Professional Photo Enhancement */
+.professional-photo {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    filter: contrast(1.1) saturate(1.1) brightness(1.05);
+}
+
+.professional-photo:hover {
+    filter: contrast(1.2) saturate(1.2) brightness(1.1);
+    transform: scale(1.02);
+}
+
+/* Contact Quick Action */
+.quick-contact {
+    position: absolute;
+    bottom: 20px;
+    right: -60px;
+    background: linear-gradient(45deg, #0ea5e9, #3b82f6);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    box-shadow: 0 8px 25px rgba(14, 165, 233, 0.4);
+}
+
+.quick-contact:hover {
+    transform: scale(1.1);
+    background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+    box-shadow: 0 12px 35px rgba(59, 130, 246, 0.6);
+}
+
+/* Responsive Professional Layout */
+@media (max-width: 768px) {
+    .skills-indicator {
+        left: -30px;
+        gap: 6px;
+    }
+    
+    .skill-dot {
+        width: 10px;
+        height: 10px;
+    }
+    
+    .professional-badge {
+        padding: 6px 12px;
+        font-size: 0.75rem;
+    }
+    
+    .quick-contact {
+        right: -40px;
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    .achievement-stars {
+        top: -10px;
+    }
+    
+    .achievement-star {
+        width: 12px;
+        height: 12px;
+    }
+}
+
+/* Professional Tooltip */
+.professional-tooltip {
+    position: absolute;
+    background: rgba(15, 23, 42, 0.95);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.professional-tooltip::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+}
+
+.tooltip-top {
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-5px);
+}
+
+.tooltip-top::before {
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-top-color: rgba(15, 23, 42, 0.95);
+}
+
+.skill-dot:hover .professional-tooltip,
+.professional-badge:hover .professional-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-10px);
+}

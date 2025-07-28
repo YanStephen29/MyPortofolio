@@ -15,6 +15,8 @@
 
     <!-- Custom Styles -->
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/3d-spheres.css">
+    <link rel="stylesheet" href="css/professional-profile.css">
 
     <style>
         body {
@@ -376,28 +378,74 @@
                 <div class="flex flex-col lg:flex-row items-center justify-center gap-12 mb-8">
                     <!-- Profile Photo -->
                     <div class="flex-shrink-0 animate-fade-in">
-                        <div class="relative">
-                            <!-- Main photo container -->
-                            <div class="w-80 h-80 sm:w-96 sm:h-96 rounded-full overflow-hidden border-4 border-gradient-to-r from-sky-500 to-purple-600 p-1 bg-gradient-to-r from-sky-500 to-purple-600 shadow-2xl">
+                        <div class="professional-photo-container relative">
+                            <!-- Professional Experience Level Ring -->
+                            <div class="experience-ring"></div>
+                            
+                            <!-- Skills Indicator -->
+                            <div class="skills-indicator">
+                                <div class="skill-dot skill-web">
+                                    <div class="professional-tooltip tooltip-top">Web Development</div>
+                                </div>
+                                <div class="skill-dot skill-mobile">
+                                    <div class="professional-tooltip tooltip-top">Mobile Apps</div>
+                                </div>
+                                <div class="skill-dot skill-ml">
+                                    <div class="professional-tooltip tooltip-top">Machine Learning</div>
+                                </div>
+                                <div class="skill-dot skill-iot">
+                                    <div class="professional-tooltip tooltip-top">IoT Development</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Main photo container with professional styling -->
+                            <div class="w-80 h-80 sm:w-96 sm:h-96 rounded-full overflow-hidden professional-border border-4 p-1 shadow-2xl">
                                 <div class="w-full h-full rounded-full overflow-hidden bg-slate-800">
                                     <!-- Replace this src with your actual photo -->
-                                    <img src="assets/images/profile-photo.jpg" alt="Yan Stephen Christian Immanuel Hutagalung" class="w-full h-full object-cover object-center hover:scale-110 transition-transform duration-500" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <img src="assets/images/profile-photo.jpg" alt="Yan Stephen Christian Immanuel Hutagalung" class="professional-photo w-full h-full object-cover object-center" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                                     <!-- Fallback if photo not found -->
                                     <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-700 to-slate-800" style="display: none;">
                                         <div class="text-center">
                                             <div class="w-32 h-32 mx-auto mb-4 bg-gradient-to-br from-sky-500 to-purple-600 rounded-full flex items-center justify-center">
                                                 <span class="text-4xl font-bold text-white">YS</span>
                                             </div>
-                                            <p class="text-slate-300 text-sm">photo profile</p>
+                                            <p class="text-slate-300 text-sm">Professional Photo</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             
-                            <!-- Floating decorative elements around photo -->
-                            <div class="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-br from-sky-400 to-blue-500 rounded-full animate-pulse"></div>
-                            <div class="absolute -bottom-6 -left-4 w-6 h-6 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full animate-pulse" style="animation-delay: 0.5s"></div>
-                            <div class="absolute top-8 -left-6 w-4 h-4 bg-gradient-to-br from-cyan-400 to-teal-500 rounded-full animate-pulse" style="animation-delay: 1s"></div>
+                            <!-- Professional Badges -->
+                            <div class="badge-available professional-badge">
+                                <span>🟢 Available</span>
+                                <div class="professional-tooltip tooltip-top">Open for opportunities</div>
+                            </div>
+                            <div class="badge-verified professional-badge">
+                                <span>✓ Verified</span>
+                                <div class="professional-tooltip tooltip-top">Certified Developer</div>
+                            </div>
+                            <div class="badge-status professional-badge">
+                                <span>Active</span>
+                                <div class="professional-tooltip tooltip-top">Currently seeking internship</div>
+                            </div>
+                            
+                            <!-- Professional Info Overlay -->
+                            <div class="professional-overlay">
+                                <div class="text-center">
+                                    <p class="text-white font-semibold text-sm">Computer Science Student</p>
+                                    <p class="text-sky-400 text-xs">Pertamina University</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Quick Contact Button -->
+                            <div class="quick-contact" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">
+                                <span>💬</span>
+                            </div>
+                            
+                            <!-- Floating decorative elements around photo (3D Spheres) -->
+                            <div class="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-br from-sky-400 to-blue-500 rounded-full floating-sphere sphere-1 sphere-glow"></div>
+                            <div class="absolute -bottom-6 -left-4 w-6 h-6 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full floating-sphere sphere-2 sphere-orbital" style="animation-delay: 0.5s"></div>
+                            <div class="absolute top-8 -left-6 w-4 h-4 bg-gradient-to-br from-cyan-400 to-teal-500 rounded-full floating-sphere sphere-3 sphere-glow" style="animation-delay: 1s"></div>
                         </div>
                     </div>
                     
@@ -422,7 +470,7 @@
                     <a href="#projects" class="btn-glow inline-block bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold px-8 py-4 rounded-xl hover:from-sky-600 hover:to-blue-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl">
                         View My Projects
                     </a>
-                    <a href="https://drive.google.com/file/d/1akxeyoWFV0R1ij_da4Baz77S2VhMbP7d/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="inline-block bg-gradient-to-r from-purple-500 to-pink-600 text-white font-semibold px-8 py-4 rounded-xl hover:from-purple-600 hover:to-pink-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl flex items-center gap-2">
+                    <a href="https://drive.google.com/file/d/1T28Zm6ONO_ASQsIGy7PRzKCaL4jS7-wH/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="inline-block bg-gradient-to-r from-purple-500 to-pink-600 text-white font-semibold px-8 py-4 rounded-xl hover:from-purple-600 hover:to-pink-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                             <polyline points="14,2 14,8 20,8"></polyline>
@@ -473,7 +521,7 @@
                             <div class="space-y-2 mb-4">
                                 <div class="flex justify-between">
                                     <span class="text-slate-400">GPA</span>
-                                    <a href="https://drive.google.com/file/d/1mPW8fNIKayLqhjR7myWm0gdoH-VYPUUL/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="text-sky-400 font-semibold hover:text-sky-300 transition-colors duration-200 cursor-pointer underline decoration-dotted underline-offset-2 hover:decoration-solid" title="Click to view transcript">3.32</a>
+                                    <a href="https://drive.google.com/file/d/1PmEHRebJ1Yj656SUH939J6sW2-NsSJXx/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="text-sky-400 font-semibold hover:text-sky-300 transition-colors duration-200 cursor-pointer underline decoration-dotted underline-offset-2 hover:decoration-solid" title="Click to view transcript">3.4</a>
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-slate-400">Status</span>
@@ -1234,6 +1282,7 @@
     <!-- Functionality Files -->
     <script src="js/modal.js"></script>
     <script src="js/filter.js"></script>
+    <script src="js/3d-spheres.js"></script>
     
     <!-- Main Application -->
     <script src="js/main.js"></script>
